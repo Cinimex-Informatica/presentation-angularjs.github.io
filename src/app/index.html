@@ -1,0 +1,16 @@
+<!doctype html>
+<html ng-app>
+  <head>
+  	<link rel="stylesheet" type="text/css" href="app.css">
+    <script src="http://code.angularjs.org/1.1.4/angular.min.js"></script>
+  </head>
+  <body>
+    <div>
+    	 <p ng-init=" name='World' ">Hello {{name}}!</p>
+    	 <form>
+    	 	<label for="name">Please tell your name:</label>
+    	 	<input id="name" ng-model="name" />
+    	 </form>
+    </div>
+  </body>
+</html>
