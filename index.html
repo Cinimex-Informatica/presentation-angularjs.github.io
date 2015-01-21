@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Введение в AngularJS</title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="styles/styles.css"/>
+  </head>
+  <body>
+    <article>
+      <section>
+        <h1>Введение в AngularJS</h1>
+        <!--h3//a(href='https://twitter.com/markdalgleish') @markdalgleish
+        -->
+        <!--img.avatar.avatar--small(src='images/profile.jpg')-->
+      </section>
+      <section>
+        <h2>Вспомним MVC</h2><br><img src="images/mvc.jpg" class="logo--mvc">
+      </section>
+      <section>
+        <h1>MVC в AngularJS</h1>
+      </section>
+      <section>
+        <h2>Контроллер</h2>
+        <ul>
+          <li></li>
+          <li>Объекты и функции на <i>javascript</i></li>
+          <li>Именуются всегда "controllername<b>Ctrl</b>"</li>
+          <li>Отвечают за логику поведения компонент</li>
+          <li>Работают только с данными из модели (<i>$scope</i>)</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Модель</h2><img src="images/model.png" class="logo">
+        <ul>
+          <li></li>
+          <li>Содержит конкретные данные для представления</li>
+          <li>Видна через ссылку (<i>$scope</i>)</li>
+          <li>Изменения в модели отображаются в представлении</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Представление
+          <h3></h3>
+          <ul>
+            <li></li>
+            <li>Для программиста - это HTML (в большинстве случаев)</li>
+            <li><h2>НО!</h2></li>
+            <li>AngularJS работает с DOM (за это мы его и любим) </li><img src="images/love.png" class="bullet avatar--small">
+          </ul>
+        </h2>
+      </section>
+      <section>
+        <h2>Общая концепция </h2>
+      </section>
+      <section>
+        <h3>Перед отображением происходит перехват DOM, он модифицируется, в соответствии с моделью, и, модифицированный, передаётся браузеру.</h3><img src="images/angular-concept.png" class="logo">
+      </section>
+      <section class="gif gif--magic">
+        <h2>Подробнее о </h2>
+      </section>
+      <section>
+        <h3>Исходный код</h3>
+        <pre class="language-javascript"><code>&lt;!doctype html&gt;
+&lt;html ng-app&gt;
+  &lt;head&gt;
+  	&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;app.css&quot;&gt;
+    &lt;script src=&quot;http://code.angularjs.org/1.1.4/angular.min.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div&gt;
+    	 &lt;p ng-init=&quot; name='World' &quot;&gt;Hello {{name}}!&lt;/p&gt;
+    	 &lt;form&gt;
+    	 	&lt;label for=&quot;name&quot;&gt;Please tell your name:&lt;/label&gt;
+    	 	&lt;input id=&quot;name&quot; ng-model=&quot;name&quot; /&gt;
+    	 &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </section>
+      <section>
+        <h3>Как это выгядит: </h3>
+        <iframe src="app/index.html"></iframe>
+      </section>
+      <section class="gif gif--future">
+        <h1 class="bullet">Что дальше?</h1>
+        <ul>
+          <li><a href="https://docs.angularjs.org/tutorial">Туториал </a> с учебным приложением "Каталог телефонов" <br>(<a href="http://angular.ru/tutorial">на русском</a>)</li>
+          <li><a href="http://yeoman.io/codelab.html">Yeoman</a> генератор каркаса приложения</li>
+          <!--li So what's the difference? <strong>Config vs code.</strong>-->
+        </ul>
+      </section>
+      <section>
+        <h2>Спасибо за внимание! </h2>
+        <h3><a href="https://github.com/QIvan">QIvan</a></h3><img src="images/profile.jpg" class="avatar avatar--small">
+      </section>
+    </article>
+    <script src="scripts/scripts.js"></script>
+  </body>
+</html>
