@@ -66,7 +66,6 @@
         <pre class="language-javascript"><code>&lt;!doctype html&gt;
 &lt;html&gt;
   &lt;head&gt;
-  	&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;app.css&quot;&gt;
     &lt;script src=&quot;http://code.angularjs.org/1.1.4/angular.min.js&quot;&gt;&lt;/script&gt;
   &lt;/head&gt;
   &lt;body&gt;
@@ -87,7 +86,7 @@
       </section>
       <section>
         <h2>Демо </h2><small><i>Примечание:</i> Cлайд интерактивный. Можно в него потыкать. Здесь исполняется код предыдущего слайда</small><br>
-        <iframe src="app/index.html"></iframe><img src="images/databinding.png" align="left" class="img img--half">
+        <iframe style="background: #FFFFFF" src="app/index.html"></iframe><img src="images/databinding.png" align="left" class="img img--half">
       </section>
       <!--section
       //h3 Пояснения
@@ -143,20 +142,74 @@
         </ul>
       </section>
       <section>
-        <h2>Инжектор</h2><span></span>
+        <h2>Инжектор и модули</h2><br><span><b>Инжектор</b> — это надстройщик всех сервисов. Для каждого Angular-приложения существует один и только один инжектор. Инжектор позволяет находить экземпляры объектов по их именам. Инжектор поддерживает внутри себя кэш объектов, таким образом несколько вызовов поиска какого-либо объекта вернут один и тот же экземпляр. Если инжектор ничего не находит, он просит фабрику создать новый экземпляр.</span><br><span><b>Модуль</b> — это способ настройки фабричного экземпляра инжектора (известного как provider) по просьбе инжектора.</span>
       </section>
       <section>
-        <h2>Модули</h2>
+        <h2>Внедрение зависимости</h2><br><code class="language-javascript">
+          // Вы пишете функции типа этой.
+          
+          function doSomething(serviceA, serviceB) {
+          
+            // тут какие-то действия.
+          }
+          
+          
+          // *** дедовский способ *** 
+          
+          var serviceA = $injector.get('serviceA');
+          
+          var serviceB = $injector.get('serviceB');
+          
+          // теперь можно вызывать функцию
+          
+          doSomething(serviceA, serviceB);
+          
+          
+          // *** стильный, модный, молодёжный способ *** 
+          
+          // $injector сам передаст необходимые аргументы функции
+          
+          $injector.invoke(doSomething); 
+          
+          //Именно так фреймворк вызывает ваши функции
+          </code>
       </section>
       <section>
-        <h2>Директивы</h2>
+        <h2>Директивы</h2><br><span>Директивы — это изменение поведения или преобразование модели DOM, связанное с пользовательским атрибутом, именем элемента, или css классом. </span>Директивы позволяют расширять HTML синтаксис, в декларативной форме. Ниже приведен пример связывания данных для директивы contenteditable.
       </section>
       <section>
-        <h2>Шаблоны</h2>
+        <h2>Фильтры</h2><br><span>Фильтры преобразуют данные. Обычно они используются в связке с текущей локалью пользователя, чтобы форматировать данные в специфичный для данной локализации формат.</span><span>Фильтры близки по духу к конвейерам в <b>UNIX</b> и используют тот же синтаксис | (вертикальная черта)</span>
       </section>
       <section>
-        <h2>Фильтры</h2>
+        <h2>Пример фильтра</h2><br>
+        <pre class="language-javascript"><code>&lt;!doctype html&gt;
+&lt;html ng-app&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;http://code.angularjs.org/1.1.4/angular.min.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div ng-init=&quot;list = ['Chrome', 'Safari', 'Firefox', 'IE'] &quot;&gt;
+      фильтрация массива 
+      &lt;input ng-model=&quot;predicate&quot;&gt; &lt;br&gt;
+      {{ list | filter:predicate | json }}
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><br><small><i>Примечание:</i> Здесь тоже можно поиграться  </small>
+        <iframe height="50" style="background: #FFFFFF" src="app/filter.html "></iframe>
       </section>
+      <section>
+        <h2>Шаблоны</h2><br><span>Шаблон Angular является декларативной спецификацией, которая, наряду с информацией из модели и контроллером, влияет на то, что пользователь видит в браузере. Это статичный DOM, содержащий HTML, CSS, и специальные элементы и атрибуты Angular. Элементы и атрибуты заставляют Angular добавить поведение и преобразовать DOM-шаблон в динамический DOM.</span>
+      </section>
+      <section>
+        <h2>Элеметы используемые в шаблонах</h2>
+        <ul>
+          <li>Директива </li>
+          <li>Разметка <br/> (двойные фигурные скобки {{ }} для связи выражений, встраиваемых Angular'ом в разметку элементов)</li>
+          <li>Фильтр</li>
+          <li>Управляющие элементы формы </li>
+        </ul>
+      </section>
+      <section class="gif gif--end"></section>
       <section class="gif gif--future">
         <h1 class="bullet">Что дальше?</h1>
         <ul>

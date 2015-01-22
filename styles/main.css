@@ -445,3 +445,6 @@ a.black {
 .gif--magic {
   background-image: url("../images/gif/magic.gif");
 }
+.gif--end {
+  background-image: url("../images/end.png");
+}
