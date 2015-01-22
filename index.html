@@ -18,8 +18,8 @@
       <section>
         <h2>Вспомним MVC</h2><br><img src="images/mvc.jpg" class="logo--mvc">
       </section>
-      <section>
-        <h1>MVC в AngularJS</h1>
+      <section data-bespoke-state="green" class="light">
+        <h2>MVC в AngularJS</h2>
       </section>
       <section>
         <h2>Контроллер</h2>
@@ -41,47 +41,121 @@
         </ul>
       </section>
       <section>
-        <h2>Представление
-          <h3></h3>
-          <ul>
-            <li></li>
-            <li>Для программиста - это HTML (в большинстве случаев)</li>
-            <li><h2>НО!</h2></li>
-            <li>AngularJS работает с DOM (за это мы его и любим) </li><img src="images/love.png" class="bullet avatar--small">
-          </ul>
-        </h2>
+        <h2>Представление</h2><br>
+        <h3>Для программиста - это HTML (в большинстве случаев)</h3>
+        <h2><b>НО!</b></h2>
+        <h3 class="bullet">AngularJS работает с DOM (за это мы его и любим) </h3><img src="images/love.png" class="bullet avatar--small">
       </section>
-      <section>
+      <section data-bespoke-state="green" class="light">
         <h2>Общая концепция </h2>
       </section>
       <section>
-        <h3>Перед отображением происходит перехват DOM, он модифицируется, в соответствии с моделью, и, модифицированный, передаётся браузеру.</h3><img src="images/angular-concept.png" class="logo">
+        <h2>Отображение в браузере</h2><br><img src="images/angular-concept.png" class="img--half"><span>Перед отображением происходит перехват DOM, он модифицируется ангуляром, в соответствии с моделью, и, модифицированный, передаётся браузеру.</span>
       </section>
-      <section class="gif gif--magic">
-        <h2>Подробнее о </h2>
+      <section>
+        <h2>Отображение в браузере</h2><br>
+        <div style="text-align: left"><img src="images/concepts-view.png" align="right" class="img"><span>
+            AngularJS ищет <b><i>директивы</i></b>, которые, в свою очередь, определяют отслеживаемые элементы в модели. 
+            Результатом является постоянно обновляемое представление, которое не нуждается в повторной генерации на основе измененных данных. </span><br><br><span>Модель <b><i>($scope)</i></b> становится единственным достоверным источником данных для представления.</span></div>
+      </section>
+      <section data-bespoke-state="green" class="light">
+        <h2>Демонстрация</h2>
       </section>
       <section>
         <h3>Исходный код</h3>
         <pre class="language-javascript"><code>&lt;!doctype html&gt;
-&lt;html ng-app&gt;
+&lt;html&gt;
   &lt;head&gt;
   	&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;app.css&quot;&gt;
     &lt;script src=&quot;http://code.angularjs.org/1.1.4/angular.min.js&quot;&gt;&lt;/script&gt;
   &lt;/head&gt;
   &lt;body&gt;
-    &lt;div&gt;
-    	 &lt;p ng-init=&quot; name='World' &quot;&gt;Hello {{name}}!&lt;/p&gt;
-    	 &lt;form&gt;
-    	 	&lt;label for=&quot;name&quot;&gt;Please tell your name:&lt;/label&gt;
-    	 	&lt;input id=&quot;name&quot; ng-model=&quot;name&quot; /&gt;
-    	 &lt;/form&gt;
+    &lt;div ng-app ng-init=&quot;qty=1;cost=2&quot;&gt;
+      &lt;b&gt;Счёт:&lt;/b&gt;
+      &lt;div&gt;
+        Количество: &lt;input type=&quot;number&quot; min=&quot;0&quot; ng-model=&quot;qty&quot;&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        Стоимость: &lt;input type=&quot;number&quot; min=&quot;0&quot; ng-model=&quot;cost&quot;&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;b&gt;Итого:&lt;/b&gt; {{qty * cost}} руб.
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
       </section>
       <section>
-        <h3>Как это выгядит: </h3>
-        <iframe src="app/index.html"></iframe>
+        <h2>Демо </h2><small><i>Примечание:</i> Cлайд интерактивный. Можно в него потыкать. Здесь исполняется код предыдущего слайда</small><br>
+        <iframe src="app/index.html"></iframe><img src="images/databinding.png" align="left" class="img img--half">
+      </section>
+      <!--section
+      //h3 Пояснения
+      //p
+        //small <i>Примечание:</i> Предыдущий слайд был интерактивным. Можно в него потыкать.
+      //div(style="text-align: content")
+        //img.img.img--half(src='images/databinding.png' align="left")
+        //span Код выглядит как обычный HTML, с некоторыми дополнениями. В терминах AngularJS это называется <i>шаблон</i>. <br/> 
+             //Когда приложение стартует, запускается специальный сервис <i>"компилятор"</i>, который, как говорилось ранее, парсит и обрабатывает HTML. 
+      //br
+      //Загруженный, изменённый и отрендеренный DOM называется <i>"представление" (вьюха)</i>
+      
+      -->
+      <section class="gif gif--magic">
+        <h1>Подробнее о</h1>
+      </section>
+      <section>
+        <h3>После загрузки скрипта angular.js и построения DOM</h3><br>
+        <div><img src="images/concepts-startup.png" align="left" style="margin-top: -40px" class="img img--half img--half">
+          <div><span>
+              <ul>
+                <li></li>
+                <li>Angular ищет ng-app директиву, которая определяет область действия фреймворка</li>
+                <li>Модуль, указанный в директиве ng-app, используется для настройки <i><b>$injector</i></b></li>
+                <li><i><b>$injector</i></b> используется для создания сервиса <i><b>$compile</i></b>, а заодно и <i><b>$scope</i></b></li>
+                <li>Сервис <i><b>$compile</i></b> используется для компиляции DOM и связки его с <i><b>$scope</i></b></li>
+                <li>Присваиваются значения World свойству name в области видимости (scope)</li>
+              </ul></span></div>
+        </div>
+      </section>
+      <section data-bespoke-state="green" class="light">
+        <h2>Основные понятия AngularJS</h2>
+        <ul>
+          <li></li>
+          <li>Сервисы</li>
+          <li>Компилятор</li>
+          <li>Инжектор</li>
+          <li>Модули</li>
+          <li>Директивы</li>
+          <li>Шаблоны</li>
+          <li>Фильтры</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Сервисы</h2><br><span class="bullet">Сервисы Angular это одиночки (<i>singletons</i> — классы, у которых есть только один экземпляр), которые выполняют конкретные задачи, общие для веб-приложений.</span><br><span class="bullet">Например, <b><i>$http</i></b> сервис предоставяет низкоуровневый доступ к браузерному объекту XMLHttpRequest.</span>
+      </section>
+      <section>
+        <h2>Компилятор</h2><span>Компилятор — это angular-сервис, который сканирует DOM в поисках специальных атрибутов. </span><br><span>Процесс компиляции делится на две фазы:</span><br>
+        <ul>
+          <li></li>
+          <li><b>Компиляция</b>: просмотр DOM и подготовка всех директив. Результатом этой фазы является функция линковки.</li>
+          <li><b>Связывание</b>: слияние директив и их областей видимости для получения динамического вида. Любые изменения модели в области видимости моментально отображаются в представлении, а любые взаимодействия пользователя с представлением обновляют модель.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Инжектор</h2><span></span>
+      </section>
+      <section>
+        <h2>Модули</h2>
+      </section>
+      <section>
+        <h2>Директивы</h2>
+      </section>
+      <section>
+        <h2>Шаблоны</h2>
+      </section>
+      <section>
+        <h2>Фильтры</h2>
       </section>
       <section class="gif gif--future">
         <h1 class="bullet">Что дальше?</h1>

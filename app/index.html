@@ -1,16 +1,21 @@
 <!doctype html>
-<html ng-app>
+<html>
   <head>
   	<link rel="stylesheet" type="text/css" href="app.css">
     <script src="http://code.angularjs.org/1.1.4/angular.min.js"></script>
   </head>
   <body>
-    <div>
-    	 <p ng-init=" name='World' ">Hello {{name}}!</p>
-    	 <form>
-    	 	<label for="name">Please tell your name:</label>
-    	 	<input id="name" ng-model="name" />
-    	 </form>
+    <div ng-app ng-init="qty=1;cost=2">
+      <b>Счёт:</b>
+      <div>
+        Количество: <input type="number" min="0" ng-model="qty">
+      </div>
+      <div>
+        Стоимость: <input type="number" min="0" ng-model="cost">
+      </div>
+      <div>
+        <b>Итого:</b> {{qty * cost}} руб.
+      </div>
     </div>
   </body>
 </html>
