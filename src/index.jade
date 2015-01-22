@@ -28,8 +28,9 @@ html
         br
         img.logo--mvc(src='images/mvc.jpg')
 
-      section
-        h1 MVC в AngularJS
+
+      section.light(data-bespoke-state='green')
+        h2 MVC в AngularJS
 
 
       section
@@ -52,23 +53,34 @@ html
 
       section 
         h2 Представление
-          h3
-          ul 
-            li
-            li Для программиста - это HTML (в большинстве случаев)
-            li <h2>НО!</h2>
-            li AngularJS работает с DOM (за это мы его и любим) 
-            img.bullet.avatar--small(src='images/love.png')
+        br
+        h3 Для программиста - это HTML (в большинстве случаев)
+        h2 <b>НО!</b>
+        h3.bullet AngularJS работает с DOM (за это мы его и любим) 
+        img.bullet.avatar--small(src='images/love.png')
 
-      section
+      section.light(data-bespoke-state='green')
         h2 Общая концепция 
 
       section
-        h3 Перед отображением происходит перехват DOM, он модифицируется, в соответствии с моделью, и, модифицированный, передаётся браузеру.
-        img.logo(src='images/angular-concept.png')
+        h2 Отображение в браузере
+        br
+        img.img--half(src='images/angular-concept.png')
+        span Перед отображением происходит перехват DOM, он модифицируется ангуляром, в соответствии с моделью, и, модифицированный, передаётся браузеру.
 
-      section.gif.gif--magic
-        h2 Подробнее о 
+      section
+          h2 Отображение в браузере
+          br
+          div(style="text-align: left")
+            img.img(src='images/concepts-view.png' align="right")
+            span AngularJS ищет <b><i>директивы</i></b>, которые, в свою очередь, определяют отслеживаемые элементы в модели. 
+              Результатом является постоянно обновляемое представление, которое не нуждается в повторной генерации на основе измененных данных. 
+            br
+            br
+            span Модель <b><i>($scope)</i></b> становится единственным достоверным источником данных для представления.
+
+      section.light(data-bespoke-state='green')
+        h2 Демонстрация
 
       section
         h3 Исходный код
@@ -78,11 +90,87 @@ html
 
 
       section
-        h3 Как это выгядит: 
-        iframe(src='app/index.html')
+        h2 Демо 
+        small <i>Примечание:</i> Cлайд интерактивный. Можно в него потыкать. Здесь исполняется код предыдущего слайда
+        br
+        iframe(src='app/index.html' )
+        img.img.img--half(src='images/databinding.png' align="left")
 
+      //section
+        //h3 Пояснения
+        //p
+          //small <i>Примечание:</i> Предыдущий слайд был интерактивным. Можно в него потыкать.
+        //div(style="text-align: content")
+          //img.img.img--half(src='images/databinding.png' align="left")
+          //span Код выглядит как обычный HTML, с некоторыми дополнениями. В терминах AngularJS это называется <i>шаблон</i>. <br/> 
+               //Когда приложение стартует, запускается специальный сервис <i>"компилятор"</i>, который, как говорилось ранее, парсит и обрабатывает HTML. 
+        //br
+        //Загруженный, изменённый и отрендеренный DOM называется <i>"представление" (вьюха)</i>
 
+      section.gif.gif--magic
+        h1 Подробнее о
 
+      section 
+        h3 После загрузки скрипта angular.js и построения DOM
+        br
+        div 
+          img.img.img--half.img--half(src='images/concepts-startup.png' align="left" style="margin-top: -40px")
+          div
+            span
+              ul
+                li
+                li Angular ищет ng-app директиву, которая определяет область действия фреймворка
+                li Модуль, указанный в директиве ng-app, используется для настройки <i><b>$injector</i></b>
+                li <i><b>$injector</i></b> используется для создания сервиса <i><b>$compile</i></b>, а заодно и <i><b>$scope</i></b>
+                li Сервис <i><b>$compile</i></b> используется для компиляции DOM и связки его с <i><b>$scope</i></b>
+                li Присваиваются значения World свойству name в области видимости (scope)
+              
+      section.light(data-bespoke-state='green')
+        h2 Основные понятия AngularJS
+        ul
+          li
+          li Сервисы
+          li Компилятор
+          li Инжектор
+          li Модули
+          li Директивы
+          li Шаблоны
+          li Фильтры
+
+      section
+        h2 Сервисы
+        br
+        span.bullet Сервисы Angular это одиночки (<i>singletons</i> — классы, у которых есть только один экземпляр), которые выполняют конкретные задачи, общие для веб-приложений.
+        br
+        span.bullet Например, <b><i>$http</i></b> сервис предоставяет низкоуровневый доступ к браузерному объекту XMLHttpRequest.
+
+      section
+        h2 Компилятор
+        br
+        span Компилятор — это angular-сервис, который сканирует DOM в поисках специальных атрибутов. 
+        br
+        span Процесс компиляции делится на две фазы:
+        br
+        ul
+          li
+          li <b>Компиляция</b>: просмотр DOM и подготовка всех директив. Результатом этой фазы является функция линковки.
+          li <b>Связывание</b>: слияние директив и их областей видимости для получения динамического вида. Любые изменения модели в области видимости моментально отображаются в представлении, а любые взаимодействия пользователя с представлением обновляют модель.
+
+      section
+        h2 Инжектор
+        span
+          
+      section
+        h2 Модули
+
+      section
+        h2 Директивы
+
+      section
+        h2 Шаблоны
+
+      section
+        h2 Фильтры
 
       section.gif.gif--future
         h1.bullet Что дальше?

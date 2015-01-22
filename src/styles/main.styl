@@ -88,6 +88,10 @@ article
     position: static
     margin: 0
 
+.mybespoke-slide
+  align-items: center
+  text-align: center
+
 .bespoke-before
   transform: translateX(slide_transition_nudge_x * -1) translateX(slide_width / -2) rotateY(slide_transition_rotate_y * -1) translateX(slide_width / -2)
 
@@ -252,11 +256,18 @@ a
     width: 70px
     height: 70px
 
+.img
+  margin: 10px
+  &--half
+    size: 50%
+
 .logo
   background-position: center
   background-repeat: no-repeat
   size: 50%
   &--mvc
+    size: 70%
+  &--view 
     size: 70%
   &--gulp
     background-size: 25%
