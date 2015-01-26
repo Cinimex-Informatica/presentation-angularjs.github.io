@@ -22,14 +22,13 @@ html
           //a(href='https://twitter.com/markdalgleish') @markdalgleish
         //img.avatar.avatar--small(src='images/profile.jpg')
 
-
       section
         h2 Вспомним MVC
         br
         img.logo--mvc(src='images/mvc.jpg')
 
 
-      section.light(data-bespoke-state='green')
+      section
         h2 MVC в AngularJS
 
 
@@ -59,7 +58,7 @@ html
         h3.bullet AngularJS работает с DOM (за это мы его и любим) 
         img.bullet.avatar--small(src='images/love.png')
 
-      section.light(data-bespoke-state='green')
+      section
         h2 Общая концепция 
 
       section
@@ -79,7 +78,7 @@ html
             br
             span Модель <b><i>($scope)</i></b> становится единственным достоверным источником данных для представления.
 
-      section.light(data-bespoke-state='green')
+      section
         h2 Демонстрация
 
       section
@@ -89,12 +88,25 @@ html
             include:escape ./app/index.html 
 
 
+
       section
         h2 Демо 
         small <i>Примечание:</i> Cлайд интерактивный. Можно в него потыкать. Здесь исполняется код предыдущего слайда
         br
-        iframe(style="background: #FFFFFF" src='app/index.html' )
+        include ./app/index.html 
+        br
+        //iframe(style="background: #FFFFFF" src='app/index.html' )
         img.img.img--half(src='images/databinding.png' align="left")
+
+      section
+        h2 Итог
+        br
+        //Основная цель для программиста пишущего приложение с использованием AngularJS:
+        ul 
+          li
+          li С помощью HTML и дирректив пишется как <b>отоображать</b> данные из <i><b>$scope</i></b>
+          //(добавлять, удалять, изменять)
+          li В контроллерах пишется как <b>обрабатывать</b> данные из <i><b>$scope</i></b> 
 
       //section
         //h3 Пояснения
@@ -106,35 +118,17 @@ html
                //Когда приложение стартует, запускается специальный сервис <i>"компилятор"</i>, который, как говорилось ранее, парсит и обрабатывает HTML. 
         //br
         //Загруженный, изменённый и отрендеренный DOM называется <i>"представление" (вьюха)</i>
-
-      section.gif.gif--magic
-        h1 Подробнее о
-
-      section 
-        h3 После загрузки скрипта angular.js и построения DOM
-        br
-        div 
-          img.img.img--half.img--half(src='images/concepts-startup.png' align="left" style="margin-top: -40px")
-          div
-            span
-              ul
-                li
-                li Angular ищет ng-app директиву, которая определяет область действия фреймворка
-                li Модуль, указанный в директиве ng-app, используется для настройки <i><b>$injector</i></b>
-                li <i><b>$injector</i></b> используется для создания сервиса <i><b>$compile</i></b>, а заодно и <i><b>$scope</i></b>
-                li Сервис <i><b>$compile</i></b> используется для компиляции DOM и связки его с <i><b>$scope</i></b>
-                li Присваиваются значения World свойству name в области видимости (scope)
-              
-      section.light(data-bespoke-state='green')
+       
+      section
         h2 Основные понятия AngularJS
         ul
           li
           li Сервисы
           li Компилятор
           li Инжектор
+          li Шаблоны
           li Модули
           li Директивы
-          li Шаблоны
           li Фильтры
 
       section
@@ -156,48 +150,112 @@ html
           li <b>Связывание</b>: слияние директив и их областей видимости для получения динамического вида. Любые изменения модели в области видимости моментально отображаются в представлении, а любые взаимодействия пользователя с представлением обновляют модель.
 
       section
-        h2 Инжектор и модули
+        h2 Инжектор
         br
         span <b>Инжектор</b> — это надстройщик всех сервисов. Для каждого Angular-приложения существует один и только один инжектор. Инжектор позволяет находить экземпляры объектов по их именам. Инжектор поддерживает внутри себя кэш объектов, таким образом несколько вызовов поиска какого-либо объекта вернут один и тот же экземпляр. Если инжектор ничего не находит, он просит фабрику создать новый экземпляр.
+      
+      section
+        h2 Модули
         br
-        span <b>Модуль</b> — это способ настройки фабричного экземпляра инжектора (известного как provider) по просьбе инжектора.
+        span Место где мы пишем логику нашего Angular-приложения
+        span Место где мы определям зависимости
+        span Настраиваем инжектор
+        pre.language-javascript
+          code
+            include:escape ./app/module.html
+
+        pre.language-javascript
+          code.
+            var app = angular.module('store', [ ]);
           
       section
         h2 Внедрение зависимости
         br
-        code.language-javascript.
-          // Вы пишете функции типа этой.
+        pre.language-javascript
+          code.
+            // Вы пишете функции типа этой.
+            function doSomething(serviceA, serviceB) {
+              // тут какие-то действия.
+            }
+            
 
-          function doSomething(serviceA, serviceB) {
+            // *** дедовский способ *** 
+            var serviceA = $injector.get('serviceA');
+            var serviceB = $injector.get('serviceB');
+             
+            // теперь можно вызывать функцию
+            doSomething(serviceA, serviceB);
+                     
 
-            // тут какие-то действия.
-          }
-          
+            // *** стильный, модный, молодёжный способ *** 
+            // $injector сам передаст необходимые аргументы функции
+            $injector.invoke(doSomething); 
+            //Именно так фреймворк вызывает ваши функции
 
-          // *** дедовский способ *** 
-
-          var serviceA = $injector.get('serviceA');
-
-          var serviceB = $injector.get('serviceB');
-           
-          // теперь можно вызывать функцию
-
-          doSomething(serviceA, serviceB);
-                   
-
-          // *** стильный, модный, молодёжный способ *** 
-
-          // $injector сам передаст необходимые аргументы функции
-
-          $injector.invoke(doSomething); 
-
-          //Именно так фреймворк вызывает ваши функции
+      section
+        h2 Шаблоны
+        br
+        span Шаблон Angular является декларативной спецификацией, которая, наряду с информацией из модели и контроллером, влияет на то, что пользователь видит в браузере. Это статичный DOM, содержащий HTML, CSS, и специальные элементы и атрибуты Angular. Элементы и атрибуты заставляют Angular добавить поведение и преобразовать DOM-шаблон в динамический DOM.
+        
+      section
+        h2 Элеметы используемые в шаблонах
+        ul 
+          li Директива 
+          li Разметка <br/> (двойные фигурные скобки {{ }} для связи выражений, встраиваемых Angular'ом в разметку элементов)
+          li Фильтр
+          li Управляющие элементы формы 
 
       section
         h2 Директивы
         br
         span Директивы — это изменение поведения или преобразование модели DOM, связанное с пользовательским атрибутом, именем элемента, или css классом. 
         Директивы позволяют расширять HTML синтаксис, в декларативной форме. Ниже приведен пример связывания данных для директивы contenteditable.
+        br
+        br
+        small Во всех примерах всё что начинается с <b>ng-*</b> - это директивы
+        
+      section
+        h2 Пример директив
+
+
+      section
+        h2 Использование
+        pre.language-javascript
+          code
+            include:escape ./app/directive.html
+      
+      section
+        h2 Собственные директивы
+        pre
+          code.language-javascript.
+            app.directive('myDirectiveElement', function() {
+                return {
+                  restrict: 'E',
+                  templateUrl: 'templateElement.html'
+                };
+            });
+
+            app.directive('myDirectiveAttribute', function() {
+                return {
+                  restrict: 'A',
+                  templateUrl: 'templateAttribute.html'
+                };
+            });
+
+
+
+      section
+        h2 Собственные директивы
+        small templateElement.html
+        pre
+          code.language-javascript
+            include:escape ./app/templateElement.html
+        
+        small templateAttribute.html
+        pre
+          code.language-javascript
+            include:escape ./app/templateAttribute.html
+
 
       section
         h2 Фильтры
@@ -216,27 +274,35 @@ html
         iframe( height="50" style="background: #FFFFFF")(src='app/filter.html ' )
 
 
-      section
-        h2 Шаблоны
-        br
-        span Шаблон Angular является декларативной спецификацией, которая, наряду с информацией из модели и контроллером, влияет на то, что пользователь видит в браузере. Это статичный DOM, содержащий HTML, CSS, и специальные элементы и атрибуты Angular. Элементы и атрибуты заставляют Angular добавить поведение и преобразовать DOM-шаблон в динамический DOM.
-        
-      section
-        h2 Элеметы используемые в шаблонах
-        ul 
-          li Директива 
-          li Разметка <br/> (двойные фигурные скобки {{ }} для связи выражений, встраиваемых Angular'ом в разметку элементов)
-          li Фильтр
-          li Управляющие элементы формы 
+
 
       section.gif.gif--end
+      
+      section.gif.gif--magic
+        h1 Подробнее о
 
+      section 
+        h3 После загрузки скрипта angular.js и построения DOM
+        br
+        div 
+          img.img.img--half.img--half(src='images/concepts-startup.png' align="left" style="margin-top: -40px")
+          div
+            span
+              ul
+                li Angular ищет ng-app директиву, определяющая область действия фреймворка
+                li Этот модуль используется для настройки <i><b>$injector</i></b>
+                li <i><b>$injector</i></b> используется для создания сервиса <i><b>$compile</i></b> и <i><b>$scope</i></b>
+                li Сервис <i><b>$compile</i></b> используется для компиляции DOM и связки его с <i><b>$scope</i></b>
+                li Присваиваются значения <b>World</b> свойству <b>name</b> в области видимости (<i><b>$scope</i></b>)
+       
 
       section.gif.gif--future
         h1.bullet Что дальше?
         ul
           li <a href="https://docs.angularjs.org/tutorial">Туториал </a> с учебным приложением "Каталог телефонов" <br>(<a href="http://angular.ru/tutorial">на русском</a>)
+          li <a href="http://campus.codeschool.com/courses/shaping-up-with-angular-js/intro">Видео лекции</a>. Изучай AngularJS в браузере
           li <a href="http://yeoman.io/codelab.html">Yeoman</a> генератор каркаса приложения
+          
           //li So what's the difference? <strong>Config vs code.</strong>
 
       section
@@ -244,6 +310,10 @@ html
         h3
           a(href='https://github.com/QIvan') QIvan
         img.avatar.avatar--small(src='images/profile.jpg')
+
+      section
+        h2 Ссылка на презентацию: 
+        img.img.small(src='images/presentation-qr.png')
 
     // build:js scripts/scripts.js
     script(src='bower_components/bespoke.js/dist/bespoke.min.js')
