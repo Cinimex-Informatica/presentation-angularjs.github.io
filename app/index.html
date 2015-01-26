@@ -6,11 +6,9 @@
   <body>
     <div ng-app ng-init="qty=1;cost=2">
       <b>Счёт:</b>
-      <div>
-        Количество: <input type="number" min="0" ng-model="qty">
-      </div>
-      <div>
-        Стоимость: <input type="number" min="0" ng-model="cost">
+      <div style="text-align: left;   display: block;  margin-right: auto;">
+        Количество: &nbsp <input type="number" min="0" ng-model="qty"> <br/>
+        Стоимость: &nbsp &nbsp <input type="number" min="0" ng-model="cost">
       </div>
       <div>
         <b>Итого:</b> {{qty * cost}} руб.
