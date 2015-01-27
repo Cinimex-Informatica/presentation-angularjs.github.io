@@ -1,0 +1,15 @@
+<!doctype html>
+<html ng-app="myServiceModule">
+  <head>
+    <script src="http://code.angularjs.org/1.1.4/angular.min.js"></script>
+    <script src="/app/services.js"></script>
+  </head>
+  <body>
+	<div  id="simple" ng-controller="MyController">
+	  <p>Попробуйте сервис сами!</p>
+	  <input ng-init="message='test'" ng-model="message" >
+	  <button ng-click="callNotify(message);">NOTIFY</button>
+	  <p>(после 3х кликов вылетит сообщенка)</p>
+	</div>
+  </body>
+</html>

@@ -123,13 +123,126 @@ html
         h2 Основные понятия AngularJS
         ul
           li
-          li Сервисы
-          li Компилятор
           li Инжектор
-          li Шаблоны
           li Модули
+          li Шаблоны
           li Директивы
           li Фильтры
+          li Сервисы
+
+      section
+        h2 Инжектор
+        br
+        span <b>Инжектор</b> — это надстройщик всех сервисов. Для каждого Angular-приложения существует один и только один инжектор.
+        br
+        span Инжектор позволяет находить экземпляры объектов по их именам. Инжектор поддерживает внутри себя кэш объектов, таким образом несколько вызовов поиска какого-либо объекта вернут один и тот же экземпляр. 
+        br
+        span Если инжектор ничего не находит, он просит фабрику создать новый экземпляр.
+      
+      section
+        h2 Модули
+        br
+        span Пишется логика Angular-приложения
+        span Определяются зависимости
+        span Настраивается инжектор
+        br
+        small Чем-то похожи на pacage в java
+
+      section
+        h2 Пример модулей
+        pre.language-javascript
+          code.
+            angular.module('first', []).value('myval', 123);
+
+        pre.language-javascript
+          code.
+            //Второй модуль зависит от первого 
+            var app = angular.module('second', ['first']);
+            app.controller('myCtrl', function($scope, myval) {
+              $scope.valInScope = myval;
+            });
+
+        pre.language-javascript
+          code
+            include:escape ./app/module.html
+
+
+      section
+        h2 Шаблоны
+        br
+        span Шаблон Angular является декларативной спецификацией, которая, наряду с информацией из модели и контроллером, влияет на то, что пользователь видит в браузере. 
+        br
+        span Это статичный DOM, содержащий HTML, CSS, и специальные элементы и атрибуты Angular. 
+        br
+        span Элементы и атрибуты заставляют Angular добавить поведение и преобразовать DOM-шаблон в динамический DOM.
+        
+      section
+        h2 Элеметы используемые в шаблонах
+        ul 
+          li Директива 
+          li Разметка <br/> (двойные фигурные скобки {{ }} для связи выражений, встраиваемых Angular'ом в разметку элементов)
+          li Фильтр
+          li Теги HTML
+
+      section
+        h2 Директивы
+        br
+        span Директивы — это изменение поведения или преобразование модели DOM, связанное с пользовательским атрибутом, именем элемента, или css классом. 
+        Директивы позволяют расширять HTML синтаксис, в декларативной форме. Ниже приведен пример связывания данных для директивы contenteditable.
+        br
+        br
+        small Во всех примерах всё что начинается с <b>ng-*</b> - это директивы
+        
+      section
+        h2 Пример директив
+
+
+      section
+        h2 Использование
+        pre.language-javascript
+          code.
+            &lt;my-directive-element  ng-show="1==1">&lt;/my-directive-element>
+            //&lt;my-directive-element  ng-show="1==1" />  - так работать не будет 
+      
+      section
+        h2 Собственные директивы
+        pre
+          code.language-javascript.
+            app.directive('myDirectiveElement', function() {
+                return {
+                  restrict: 'E',
+                  templateUrl: 'templateElement.html'
+                };
+            });
+
+        pre
+          code.language-javascript
+            include:escape ./app/templateElement.html
+        small templateElement.html
+        
+
+      section
+        h2 Полученный HTML
+        pre
+          code.language-javascript
+            include:escape ./app/result-directive.html
+
+      section
+        h2 Фильтры
+        br
+        span Фильтры преобразуют данные. Обычно они используются в связке с текущей локалью пользователя, чтобы форматировать данные в специфичный для данной локализации формат.
+        br
+        span Фильтры близки по духу к конвейерам в <b>UNIX</b> и используют тот же синтаксис | (вертикальная черта)
+
+      section 
+        h2 Пример фильтра
+        br
+        pre.language-javascript
+          code
+            include:escape ./app/filter.html 
+        br
+        small <i>Примечание:</i> Здесь тоже можно поиграться  
+        iframe( height="50" style="background: #FFFFFF")(src='app/filter.html ' )
 
       section
         h2 Сервисы
@@ -137,7 +250,42 @@ html
         span.bullet Сервисы Angular это одиночки (<i>singletons</i> — классы, у которых есть только один экземпляр), которые выполняют конкретные задачи, общие для веб-приложений.
         br
         span.bullet Например, <b><i>$http</i></b> сервис предоставяет низкоуровневый доступ к браузерному объекту XMLHttpRequest.
+      
+      section
+        h2 Пример сервиса
+        pre.language-javascript
+          code
+            include ./app/services.js
+            
+      section
+        h2 Пример сервиса
+        pre.language-javascript
+          code
+            include:escape ./app/services.html
 
+      section
+        h2 Пример сервиса
+        include ./app/services.html
+
+      section.gif.gif--end
+      
+      section.gif.gif--magic
+        h1 Подробнее о
+
+      section 
+        h3 После загрузки скрипта angular.js и построения DOM
+        br
+        div 
+          img.img.img--half.img--half(src='images/concepts-startup.png' align="left" style="margin-top: -40px")
+          div
+            span
+              ul
+                li Angular ищет ng-app директиву, определяющая область действия фреймворка
+                li Этот модуль используется для настройки <i><b>$injector</i></b>
+                li <i><b>$injector</i></b> используется для создания сервиса <i><b>$compile</i></b> и <i><b>$scope</i></b>
+                li Сервис <i><b>$compile</i></b> используется для компиляции DOM и связки его с <i><b>$scope</i></b>
+                li Присваиваются значения <b>World</b> свойству <b>name</b> в области видимости (<i><b>$scope</i></b>)
+       
       section
         h2 Компилятор
         span Компилятор — это angular-сервис, который сканирует DOM в поисках специальных атрибутов. 
@@ -149,25 +297,6 @@ html
           li <b>Компиляция</b>: просмотр DOM и подготовка всех директив. Результатом этой фазы является функция линковки.
           li <b>Связывание</b>: слияние директив и их областей видимости для получения динамического вида. Любые изменения модели в области видимости моментально отображаются в представлении, а любые взаимодействия пользователя с представлением обновляют модель.
 
-      section
-        h2 Инжектор
-        br
-        span <b>Инжектор</b> — это надстройщик всех сервисов. Для каждого Angular-приложения существует один и только один инжектор. Инжектор позволяет находить экземпляры объектов по их именам. Инжектор поддерживает внутри себя кэш объектов, таким образом несколько вызовов поиска какого-либо объекта вернут один и тот же экземпляр. Если инжектор ничего не находит, он просит фабрику создать новый экземпляр.
-      
-      section
-        h2 Модули
-        br
-        span Место где мы пишем логику нашего Angular-приложения
-        span Место где мы определям зависимости
-        span Настраиваем инжектор
-        pre.language-javascript
-          code
-            include:escape ./app/module.html
-
-        pre.language-javascript
-          code.
-            var app = angular.module('store', [ ]);
-          
       section
         h2 Внедрение зависимости
         br
@@ -192,109 +321,6 @@ html
             $injector.invoke(doSomething); 
             //Именно так фреймворк вызывает ваши функции
 
-      section
-        h2 Шаблоны
-        br
-        span Шаблон Angular является декларативной спецификацией, которая, наряду с информацией из модели и контроллером, влияет на то, что пользователь видит в браузере. Это статичный DOM, содержащий HTML, CSS, и специальные элементы и атрибуты Angular. Элементы и атрибуты заставляют Angular добавить поведение и преобразовать DOM-шаблон в динамический DOM.
-        
-      section
-        h2 Элеметы используемые в шаблонах
-        ul 
-          li Директива 
-          li Разметка <br/> (двойные фигурные скобки {{ }} для связи выражений, встраиваемых Angular'ом в разметку элементов)
-          li Фильтр
-          li Управляющие элементы формы 
-
-      section
-        h2 Директивы
-        br
-        span Директивы — это изменение поведения или преобразование модели DOM, связанное с пользовательским атрибутом, именем элемента, или css классом. 
-        Директивы позволяют расширять HTML синтаксис, в декларативной форме. Ниже приведен пример связывания данных для директивы contenteditable.
-        br
-        br
-        small Во всех примерах всё что начинается с <b>ng-*</b> - это директивы
-        
-      section
-        h2 Пример директив
-
-
-      section
-        h2 Использование
-        pre.language-javascript
-          code
-            include:escape ./app/directive.html
-      
-      section
-        h2 Собственные директивы
-        pre
-          code.language-javascript.
-            app.directive('myDirectiveElement', function() {
-                return {
-                  restrict: 'E',
-                  templateUrl: 'templateElement.html'
-                };
-            });
-
-            app.directive('myDirectiveAttribute', function() {
-                return {
-                  restrict: 'A',
-                  templateUrl: 'templateAttribute.html'
-                };
-            });
-
-
-
-      section
-        h2 Собственные директивы
-        small templateElement.html
-        pre
-          code.language-javascript
-            include:escape ./app/templateElement.html
-        
-        small templateAttribute.html
-        pre
-          code.language-javascript
-            include:escape ./app/templateAttribute.html
-
-
-      section
-        h2 Фильтры
-        br
-        span Фильтры преобразуют данные. Обычно они используются в связке с текущей локалью пользователя, чтобы форматировать данные в специфичный для данной локализации формат.
-        span Фильтры близки по духу к конвейерам в <b>UNIX</b> и используют тот же синтаксис | (вертикальная черта)
-
-      section 
-        h2 Пример фильтра
-        br
-        pre.language-javascript
-          code
-            include:escape ./app/filter.html 
-        br
-        small <i>Примечание:</i> Здесь тоже можно поиграться  
-        iframe( height="50" style="background: #FFFFFF")(src='app/filter.html ' )
-
-
-
-
-      section.gif.gif--end
-      
-      section.gif.gif--magic
-        h1 Подробнее о
-
-      section 
-        h3 После загрузки скрипта angular.js и построения DOM
-        br
-        div 
-          img.img.img--half.img--half(src='images/concepts-startup.png' align="left" style="margin-top: -40px")
-          div
-            span
-              ul
-                li Angular ищет ng-app директиву, определяющая область действия фреймворка
-                li Этот модуль используется для настройки <i><b>$injector</i></b>
-                li <i><b>$injector</i></b> используется для создания сервиса <i><b>$compile</i></b> и <i><b>$scope</i></b>
-                li Сервис <i><b>$compile</i></b> используется для компиляции DOM и связки его с <i><b>$scope</i></b>
-                li Присваиваются значения <b>World</b> свойству <b>name</b> в области видимости (<i><b>$scope</i></b>)
-       
 
       section.gif.gif--future
         h1.bullet Что дальше?
