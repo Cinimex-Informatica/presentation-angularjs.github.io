@@ -72,8 +72,8 @@
     &lt;div ng-app ng-init=&quot;qty=1;cost=2&quot;&gt;
       &lt;b&gt;Счёт:&lt;/b&gt;
       &lt;div style=&quot;text-align: left;   display: block;  margin-right: auto;&quot;&gt;
-        Количество: &amp;nbsp &lt;input type=&quot;number&quot; min=&quot;0&quot; ng-model=&quot;qty&quot;&gt; &lt;br/&gt;
-        Стоимость: &amp;nbsp &amp;nbsp &lt;input type=&quot;number&quot; min=&quot;0&quot; ng-model=&quot;cost&quot;&gt;
+        Количество: &lt;input type=&quot;number&quot; min=&quot;0&quot; ng-model=&quot;qty&quot;&gt; &lt;br/&gt;
+        Стоимость: &lt;input type=&quot;number&quot; min=&quot;0&quot; ng-model=&quot;cost&quot;&gt;
       &lt;/div&gt;
       &lt;div&gt;
         &lt;b&gt;Итого:&lt;/b&gt; {{qty * cost}} руб.
@@ -92,8 +92,8 @@
     <div ng-app ng-init="qty=1;cost=2">
       <b>Счёт:</b>
       <div style="text-align: left;   display: block;  margin-right: auto;">
-        Количество: &nbsp <input type="number" min="0" ng-model="qty"> <br/>
-        Стоимость: &nbsp &nbsp <input type="number" min="0" ng-model="cost">
+        Количество: <input type="number" min="0" ng-model="qty"> <br/>
+        Стоимость: <input type="number" min="0" ng-model="cost">
       </div>
       <div>
         <b>Итого:</b> {{qty * cost}} руб.
@@ -129,17 +129,184 @@
         <h2>Основные понятия AngularJS</h2>
         <ul>
           <li></li>
-          <li>Сервисы</li>
-          <li>Компилятор</li>
           <li>Инжектор</li>
-          <li>Шаблоны</li>
           <li>Модули</li>
+          <li>Шаблоны</li>
           <li>Директивы</li>
           <li>Фильтры</li>
+          <li>Сервисы</li>
         </ul>
       </section>
       <section>
+        <h2>Инжектор</h2><br><span><b>Инжектор</b> — это надстройщик всех сервисов. Для каждого Angular-приложения существует один и только один инжектор.</span><br><span>Инжектор позволяет находить экземпляры объектов по их именам. Инжектор поддерживает внутри себя кэш объектов, таким образом несколько вызовов поиска какого-либо объекта вернут один и тот же экземпляр. </span><br><span>Если инжектор ничего не находит, он просит фабрику создать новый экземпляр.</span>
+      </section>
+      <section>
+        <h2>Модули</h2><br><span>Пишется логика Angular-приложения</span><span>Определяются зависимости</span><span>Настраивается инжектор</span><br><small>Чем-то похожи на pacage в java</small>
+      </section>
+      <section>
+        <h2>Пример модулей</h2>
+        <pre class="language-javascript"><code>angular.module('first', []).value('myval', 123);
+</code></pre>
+        <pre class="language-javascript"><code>//Второй модуль зависит от первого 
+var app = angular.module('second', ['first']);
+app.controller('myCtrl', function($scope, myval) {
+  $scope.valInScope = myval;
+});
+</code></pre>
+        <pre class="language-javascript"><code>&lt;div ng-app=&quot;second&quot;&gt;   //загрузка модуля 
+	 &lt;script type=&quot;text/javascript&quot; src=&quot; ... &lt;/script&gt;
+
+	 &lt;h2&gt;Value is {{valInScope}}&lt;/h2&gt;  // Value is 123 
+&lt;/div&gt;</code></pre>
+      </section>
+      <section>
+        <h2>Шаблоны</h2><br><span>Шаблон Angular является декларативной спецификацией, которая, наряду с информацией из модели и контроллером, влияет на то, что пользователь видит в браузере. </span><br><span>Это статичный DOM, содержащий HTML, CSS, и специальные элементы и атрибуты Angular. </span><br><span>Элементы и атрибуты заставляют Angular добавить поведение и преобразовать DOM-шаблон в динамический DOM.</span>
+      </section>
+      <section>
+        <h2>Элеметы используемые в шаблонах</h2>
+        <ul>
+          <li>Директива </li>
+          <li>Разметка <br/> (двойные фигурные скобки {{ }} для связи выражений, встраиваемых Angular'ом в разметку элементов)</li>
+          <li>Фильтр</li>
+          <li>Теги HTML</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Директивы</h2><br><span>Директивы — это изменение поведения или преобразование модели DOM, связанное с пользовательским атрибутом, именем элемента, или css классом. </span>Директивы позволяют расширять HTML синтаксис, в декларативной форме. Ниже приведен пример связывания данных для директивы contenteditable.<br><br><small>Во всех примерах всё что начинается с <b>ng-*</b> - это директивы</small>
+      </section>
+      <section>
+        <h2>Пример директив</h2>
+      </section>
+      <section>
+        <h2>Использование</h2>
+        <pre class="language-javascript"><code>&lt;my-directive-element  ng-show="1==1">&lt;/my-directive-element>
+//&lt;my-directive-element  ng-show="1==1" />  - так работать не будет 
+</code></pre>
+      </section>
+      <section>
+        <h2>Собственные директивы</h2>
+        <pre><code class="language-javascript">app.directive('myDirectiveElement', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'templateElement.html'
+    };
+});
+</code></pre>
+        <pre><code class="language-javascript">&lt;h4&gt;Список покупок&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li ng-repeat=&quot;i in [1,2,3,4,5,6]&quot;&gt;
+    &lt;strong&gt;Пиво&lt;/strong&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre><small>templateElement.html</small>
+      </section>
+      <section>
+        <h2>Полученный HTML</h2>
+        <pre><code class="language-javascript">&lt;h4&gt;Список покупок&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;strong&gt;Пиво&lt;/strong&gt;
+    &lt;strong&gt;Пиво&lt;/strong&gt;
+    &lt;strong&gt;Пиво&lt;/strong&gt;
+    &lt;strong&gt;Пиво&lt;/strong&gt;
+    &lt;strong&gt;Пиво&lt;/strong&gt;
+    &lt;strong&gt;Пиво&lt;/strong&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+      </section>
+      <section>
+        <h2>Фильтры</h2><br><span>Фильтры преобразуют данные. Обычно они используются в связке с текущей локалью пользователя, чтобы форматировать данные в специфичный для данной локализации формат.</span><br><span>Фильтры близки по духу к конвейерам в <b>UNIX</b> и используют тот же синтаксис | (вертикальная черта)</span>
+      </section>
+      <section>
+        <h2>Пример фильтра</h2><br>
+        <pre class="language-javascript"><code>&lt;!doctype html&gt;
+&lt;html ng-app&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;http://code.angularjs.org/1.1.4/angular.min.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div ng-init=&quot;list = ['Chrome', 'Safari', 'Firefox', 'IE'] &quot;&gt;
+      фильтрация массива 
+      &lt;input ng-model=&quot;predicate&quot;&gt; &lt;br&gt;
+      {{ list | filter:predicate | json }}
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><br><small><i>Примечание:</i> Здесь тоже можно поиграться  </small>
+        <iframe height="50" style="background: #FFFFFF" src="app/filter.html "></iframe>
+      </section>
+      <section>
         <h2>Сервисы</h2><br><span class="bullet">Сервисы Angular это одиночки (<i>singletons</i> — классы, у которых есть только один экземпляр), которые выполняют конкретные задачи, общие для веб-приложений.</span><br><span class="bullet">Например, <b><i>$http</i></b> сервис предоставяет низкоуровневый доступ к браузерному объекту XMLHttpRequest.</span>
+      </section>
+      <section>
+        <h2>Пример сервиса</h2>
+        <pre class="language-javascript"><code>angular.
+module('myServiceModule', []).
+ controller('MyController', ['$scope','notify', function ($scope, notify) {
+   $scope.callNotify = function(msg) {
+     notify(msg);
+   };
+ }]).
+factory('notify', ['$window', function(win) {
+   var msgs = [];
+   return function(msg) {
+     msgs.push(msg);
+     if (msgs.length == 3) {
+       win.alert(msgs.join("\n"));
+       msgs = [];
+     }
+   };
+ }]);</code></pre>
+      </section>
+      <section>
+        <h2>Пример сервиса</h2>
+        <pre class="language-javascript"><code>&lt;!doctype html&gt;
+&lt;html ng-app=&quot;myServiceModule&quot;&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;http://code.angularjs.org/1.1.4/angular.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/app/services.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+	&lt;div  id=&quot;simple&quot; ng-controller=&quot;MyController&quot;&gt;
+	  &lt;p&gt;Попробуйте сервис сами!&lt;/p&gt;
+	  &lt;input ng-init=&quot;message='test'&quot; ng-model=&quot;message&quot; &gt;
+	  &lt;button ng-click=&quot;callNotify(message);&quot;&gt;NOTIFY&lt;/button&gt;
+	  &lt;p&gt;(после 3х кликов вылетит сообщенка)&lt;/p&gt;
+	&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </section>
+      <section>
+        <h2>Пример сервиса</h2><!doctype html>
+<html ng-app="myServiceModule">
+  <head>
+    <script src="http://code.angularjs.org/1.1.4/angular.min.js"></script>
+    <script src="/app/services.js"></script>
+  </head>
+  <body>
+	<div  id="simple" ng-controller="MyController">
+	  <p>Попробуйте сервис сами!</p>
+	  <input ng-init="message='test'" ng-model="message" >
+	  <button ng-click="callNotify(message);">NOTIFY</button>
+	  <p>(после 3х кликов вылетит сообщенка)</p>
+	</div>
+  </body>
+</html>
+      </section>
+      <section class="gif gif--end"></section>
+      <section class="gif gif--magic">
+        <h1>Подробнее о</h1>
+      </section>
+      <section>
+        <h3>После загрузки скрипта angular.js и построения DOM</h3><br>
+        <div><img src="images/concepts-startup.png" align="left" style="margin-top: -40px" class="img img--half img--half">
+          <div><span>
+              <ul>
+                <li>Angular ищет ng-app директиву, определяющая область действия фреймворка</li>
+                <li>Этот модуль используется для настройки <i><b>$injector</i></b></li>
+                <li><i><b>$injector</i></b> используется для создания сервиса <i><b>$compile</i></b> и <i><b>$scope</i></b></li>
+                <li>Сервис <i><b>$compile</i></b> используется для компиляции DOM и связки его с <i><b>$scope</i></b></li>
+                <li>Присваиваются значения <b>World</b> свойству <b>name</b> в области видимости (<i><b>$scope</i></b>)</li>
+              </ul></span></div>
+        </div>
       </section>
       <section>
         <h2>Компилятор</h2><span>Компилятор — это angular-сервис, который сканирует DOM в поисках специальных атрибутов. </span><br><span>Процесс компиляции делится на две фазы:</span><br>
@@ -148,21 +315,6 @@
           <li><b>Компиляция</b>: просмотр DOM и подготовка всех директив. Результатом этой фазы является функция линковки.</li>
           <li><b>Связывание</b>: слияние директив и их областей видимости для получения динамического вида. Любые изменения модели в области видимости моментально отображаются в представлении, а любые взаимодействия пользователя с представлением обновляют модель.</li>
         </ul>
-      </section>
-      <section>
-        <h2>Инжектор</h2><br><span><b>Инжектор</b> — это надстройщик всех сервисов. Для каждого Angular-приложения существует один и только один инжектор. Инжектор позволяет находить экземпляры объектов по их именам. Инжектор поддерживает внутри себя кэш объектов, таким образом несколько вызовов поиска какого-либо объекта вернут один и тот же экземпляр. Если инжектор ничего не находит, он просит фабрику создать новый экземпляр.</span>
-      </section>
-      <section>
-        <h2>Модули</h2><br><span>Место где мы пишем логику нашего Angular-приложения</span><span>Место где мы определям зависимости</span><span>Настраиваем инжектор</span>
-        <pre class="language-javascript"><code>&lt;!DOCTYPE html&gt;
-&lt;html ng-app=&quot;store&quot;&gt;
- &lt;body&gt;
- &lt;script type=&quot;text/javascript&quot; src=&quot;angular.min.js&quot;&gt;&lt;/script&gt;
- &lt;script type=&quot;text/javascript&quot; src=&quot;app.js&quot;&gt;&lt;/script&gt;
- &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-        <pre class="language-javascript"><code>var app = angular.module('store', [ ]);
-</code></pre>
       </section>
       <section>
         <h2>Внедрение зависимости</h2><br>
@@ -184,104 +336,8 @@ doSomething(serviceA, serviceB);
 // $injector сам передаст необходимые аргументы функции
 $injector.invoke(doSomething); 
 //Именно так фреймворк вызывает ваши функции
-</code></pre>
-      </section>
-      <section>
-        <h2>Шаблоны</h2><br><span>Шаблон Angular является декларативной спецификацией, которая, наряду с информацией из модели и контроллером, влияет на то, что пользователь видит в браузере. Это статичный DOM, содержащий HTML, CSS, и специальные элементы и атрибуты Angular. Элементы и атрибуты заставляют Angular добавить поведение и преобразовать DOM-шаблон в динамический DOM.</span>
-      </section>
-      <section>
-        <h2>Элеметы используемые в шаблонах</h2>
-        <ul>
-          <li>Директива </li>
-          <li>Разметка <br/> (двойные фигурные скобки {{ }} для связи выражений, встраиваемых Angular'ом в разметку элементов)</li>
-          <li>Фильтр</li>
-          <li>Управляющие элементы формы </li>
-        </ul>
-      </section>
-      <section>
-        <h2>Директивы</h2><br><span>Директивы — это изменение поведения или преобразование модели DOM, связанное с пользовательским атрибутом, именем элемента, или css классом. </span>Директивы позволяют расширять HTML синтаксис, в декларативной форме. Ниже приведен пример связывания данных для директивы contenteditable.<br><br><small>Во всех примерах всё что начинается с <b>ng-*</b> - это директивы</small>
-      </section>
-      <section>
-        <h2>Пример директив</h2>
-      </section>
-      <section>
-        <h2>Использование</h2>
-        <pre class="language-javascript"><code>&lt;my-directive-element ng-show=&quot;1 === 1&quot;&gt;&lt;/my-directive-element&gt;
-
-&lt;div my-directive-attribute&gt;&lt;/div&gt;</code></pre>
-      </section>
-      <section>
-        <h2>Собственные директивы</h2>
-        <pre><code class="language-javascript">app.directive('myDirectiveElement', function() {
-    return {
-      restrict: 'E',
-      templateUrl: 'templateElement.html'
-    };
-});
-
-app.directive('myDirectiveAttribute', function() {
-    return {
-      restrict: 'A',
-      templateUrl: 'templateAttribute.html'
-    };
-});
-
 
 </code></pre>
-      </section>
-      <section>
-        <h2>Собственные директивы</h2><small>templateElement.html</small>
-        <pre><code class="language-javascript">&lt;h4&gt;Список покупок женщины&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;Молоко&lt;/li&gt;
-  &lt;li&gt;Хлеб&lt;/li&gt;
-  &lt;li&gt;Овощи&lt;/li&gt;
-  &lt;li&gt;и т.д.&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre><small>templateAttribute.html</small>
-        <pre><code class="language-javascript">&lt;h4&gt;Список покупок мужчины&lt;/h4&gt;
-&lt;ul class=&quot;list-unstyled&quot;&gt;
-  &lt;li ng-repeat=&quot;i in [] | range:24&quot;&gt;
-    &lt;strong&gt;Пиво&lt;/strong&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</code></pre>
-      </section>
-      <section>
-        <h2>Фильтры</h2><br><span>Фильтры преобразуют данные. Обычно они используются в связке с текущей локалью пользователя, чтобы форматировать данные в специфичный для данной локализации формат.</span><span>Фильтры близки по духу к конвейерам в <b>UNIX</b> и используют тот же синтаксис | (вертикальная черта)</span>
-      </section>
-      <section>
-        <h2>Пример фильтра</h2><br>
-        <pre class="language-javascript"><code>&lt;!doctype html&gt;
-&lt;html ng-app&gt;
-  &lt;head&gt;
-    &lt;script src=&quot;http://code.angularjs.org/1.1.4/angular.min.js&quot;&gt;&lt;/script&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;div ng-init=&quot;list = ['Chrome', 'Safari', 'Firefox', 'IE'] &quot;&gt;
-      фильтрация массива 
-      &lt;input ng-model=&quot;predicate&quot;&gt; &lt;br&gt;
-      {{ list | filter:predicate | json }}
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre><br><small><i>Примечание:</i> Здесь тоже можно поиграться  </small>
-        <iframe height="50" style="background: #FFFFFF" src="app/filter.html "></iframe>
-      </section>
-      <section class="gif gif--end"></section>
-      <section class="gif gif--magic">
-        <h1>Подробнее о</h1>
-      </section>
-      <section>
-        <h3>После загрузки скрипта angular.js и построения DOM</h3><br>
-        <div><img src="images/concepts-startup.png" align="left" style="margin-top: -40px" class="img img--half img--half">
-          <div><span>
-              <ul>
-                <li>Angular ищет ng-app директиву, определяющая область действия фреймворка</li>
-                <li>Этот модуль используется для настройки <i><b>$injector</i></b></li>
-                <li><i><b>$injector</i></b> используется для создания сервиса <i><b>$compile</i></b> и <i><b>$scope</i></b></li>
-                <li>Сервис <i><b>$compile</i></b> используется для компиляции DOM и связки его с <i><b>$scope</i></b></li>
-                <li>Присваиваются значения <b>World</b> свойству <b>name</b> в области видимости (<i><b>$scope</i></b>)</li>
-              </ul></span></div>
-        </div>
       </section>
       <section class="gif gif--future">
         <h1 class="bullet">Что дальше?</h1>
