@@ -237,12 +237,10 @@ html
       section 
         h2 Пример фильтра
         br
-        pre.language-javascript
-          code
-            include:escape ./app/filter.html 
         br
-        small <i>Примечание:</i> Здесь тоже можно поиграться  
-        iframe( height="50" style="background: #FFFFFF")(src='app/filter.html ' )
+        br 
+        div(style = 'width: 90%')
+          include ./app/filter.html 
 
       section
         h2 Сервисы
@@ -253,24 +251,78 @@ html
       
       section
         h2 Пример сервиса
-        pre.language-javascript
-          code
-            include ./app/services.js
-            
-      section
-        h2 Пример сервиса
-        pre.language-javascript
-          code
-            include:escape ./app/services.html
+        br
+        br
+        br 
+        div(style = 'width: 90%')
+          include ./app/services.html
 
       section
-        h2 Пример сервиса
-        include ./app/services.html
+        h2 События
+        br
+        h3 Различаются для <b>$scope</b> и для <b>$rootScope</b>
+
+      section
+        h2 События для $scope
+        br
+        span Подписаться на событие: 
+        div
+            pre
+              code.language-javascript.
+                $scope.$on('nameEvent', function (event, data) {  });
+
+        span Послать событие вверх по родительскому дереву: 
+        div
+          pre
+            code.language-javascript.
+              $scope.$emit('nameEvent', 'Data');
+
+        span Послать событие вниз по родительскому дереву: 
+        div
+          div
+            pre
+              code.language-javascript.
+                $scope.$broadcast('nameEvent', 'Data');
+
+      section
+        h2 События для $rootScope
+        br
+        span Подписаться на событие: 
+        div
+          pre
+            code.language-javascript.
+              $rootScope.$on('nameEvent', function (event, data) { ... });
+
+        span Послать событие <b>только</b> для тех, кто подписан через $rootScope.$on
+        div
+          pre
+            code.language-javascript
+              $rootScope.$emit('nameEvent', 'Data');
+        
+        span Послать событие для всех кто подписан на событие <i><b>nameEvent</b></i>
+        div
+          pre
+            code.language-javascript
+              $rootScope.$broadcast('nameEvent', 'Data');
+
+      section
+        h2 Пример события
+        br 
+        br 
+        br 
+        div(style = 'width: 90%')
+          include ./app/event.html
 
       section.gif.gif--end
       
       section.gif.gif--magic
         h1 Подробнее о
+
+      section
+        h3  Разберём подробнее первый пример 
+        pre.language-javascript
+          code
+            include:escape ./app/index.html
 
       section 
         h3 После загрузки скрипта angular.js и построения DOM
@@ -320,7 +372,7 @@ html
             // $injector сам передаст необходимые аргументы функции
             $injector.invoke(doSomething); 
             //Именно так фреймворк вызывает ваши функции
-
+      
 
       section.gif.gif--future
         h1.bullet Что дальше?
