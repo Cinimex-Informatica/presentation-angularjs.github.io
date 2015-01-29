@@ -217,83 +217,84 @@ app.controller('myCtrl', function($scope, myval) {
         <h2>Фильтры</h2><br><span>Фильтры преобразуют данные. Обычно они используются в связке с текущей локалью пользователя, чтобы форматировать данные в специфичный для данной локализации формат.</span><br><span>Фильтры близки по духу к конвейерам в <b>UNIX</b> и используют тот же синтаксис | (вертикальная черта)</span>
       </section>
       <section>
-        <h2>Пример фильтра</h2><br>
-        <pre class="language-javascript"><code>&lt;!doctype html&gt;
-&lt;html ng-app&gt;
-  &lt;head&gt;
-    &lt;script src=&quot;http://code.angularjs.org/1.1.4/angular.min.js&quot;&gt;&lt;/script&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;div ng-init=&quot;list = ['Chrome', 'Safari', 'Firefox', 'IE'] &quot;&gt;
-      фильтрация массива 
-      &lt;input ng-model=&quot;predicate&quot;&gt; &lt;br&gt;
-      {{ list | filter:predicate | json }}
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre><br><small><i>Примечание:</i> Здесь тоже можно поиграться  </small>
-        <iframe height="50" style="background: #FFFFFF" src="app/filter.html "></iframe>
+        <h2>Пример фильтра</h2><br><br><br>
+        <div style="width: 90%"><p data-height="450" data-theme-id="0" data-slug-hash="yyoMmN" data-default-tab="result" data-user="QIvan" class='codepen'>See the Pen <a href='http://codepen.io/QIvan/pen/yyoMmN/'>Demo: filter for presentation angularjs</a> by QIvan (<a href='http://codepen.io/QIvan'>@QIvan</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+        </div>
       </section>
       <section>
         <h2>Сервисы</h2><br><span class="bullet">Сервисы Angular это одиночки (<i>singletons</i> — классы, у которых есть только один экземпляр), которые выполняют конкретные задачи, общие для веб-приложений.</span><br><span class="bullet">Например, <b><i>$http</i></b> сервис предоставяет низкоуровневый доступ к браузерному объекту XMLHttpRequest.</span>
       </section>
       <section>
-        <h2>Пример сервиса</h2>
-        <pre class="language-javascript"><code>angular.
-module('myServiceModule', []).
- controller('MyController', ['$scope','notify', function ($scope, notify) {
-   $scope.callNotify = function(msg) {
-     notify(msg);
-   };
- }]).
-factory('notify', ['$window', function(win) {
-   var msgs = [];
-   return function(msg) {
-     msgs.push(msg);
-     if (msgs.length == 3) {
-       win.alert(msgs.join("\n"));
-       msgs = [];
-     }
-   };
- }]);</code></pre>
+        <h2>Пример сервиса</h2><br><br><br>
+        <div style="width: 90%"><p data-height="450" data-theme-id="0" data-slug-hash="OPjpEo" data-default-tab="result" data-user="QIvan" class='codepen'>See the Pen <a href='http://codepen.io/QIvan/pen/OPjpEo/'>Demo: services for angular presentation</a> by QIvan (<a href='http://codepen.io/QIvan'>@QIvan</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+        </div>
       </section>
       <section>
-        <h2>Пример сервиса</h2>
-        <pre class="language-javascript"><code>&lt;!doctype html&gt;
-&lt;html ng-app=&quot;myServiceModule&quot;&gt;
-  &lt;head&gt;
-    &lt;script src=&quot;http://code.angularjs.org/1.1.4/angular.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;app/services.js&quot;&gt;&lt;/script&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-	&lt;div  id=&quot;simple&quot; ng-controller=&quot;MyController&quot;&gt;
-	  &lt;p&gt;Попробуйте сервис сами!&lt;/p&gt;
-	  &lt;input ng-init=&quot;message='test'&quot; ng-model=&quot;message&quot; &gt;
-	  &lt;button ng-click=&quot;callNotify(message);&quot;&gt;NOTIFY&lt;/button&gt;
-	  &lt;p&gt;(после 3х кликов вылетит сообщенка)&lt;/p&gt;
-	&lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
+        <h2>События</h2><br>
+        <h3>Различаются для <b>$scope</b> и для <b>$rootScope</b></h3>
       </section>
       <section>
-        <h2>Пример сервиса</h2><!doctype html>
-<html ng-app="myServiceModule">
-  <head>
-    <script src="http://code.angularjs.org/1.1.4/angular.min.js"></script>
-    <script src="app/services.js"></script>
-  </head>
-  <body>
-	<div  id="simple" ng-controller="MyController">
-	  <p>Попробуйте сервис сами!</p>
-	  <input ng-init="message='test'" ng-model="message" >
-	  <button ng-click="callNotify(message);">NOTIFY</button>
-	  <p>(после 3х кликов вылетит сообщенка)</p>
-	</div>
-  </body>
-</html>
+        <h2>События для $scope</h2><br><span>Подписаться на событие: </span>
+        <div>
+          <pre><code class="language-javascript">$scope.$on('nameEvent', function (event, data) {  });
+</code></pre>
+        </div><span>Послать событие вверх по родительскому дереву: </span>
+        <div>
+          <pre><code class="language-javascript">$scope.$emit('nameEvent', 'Data');
+</code></pre>
+        </div><span>Послать событие вниз по родительскому дереву: </span>
+        <div>
+          <div>
+            <pre><code class="language-javascript">$scope.$broadcast('nameEvent', 'Data');
+</code></pre>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>События для $rootScope</h2><br><span>Подписаться на событие: </span>
+        <div>
+          <pre><code class="language-javascript">$rootScope.$on('nameEvent', function (event, data) { ... });
+</code></pre>
+        </div><span>Послать событие <b>только</b> для тех, кто подписан через $rootScope.$on</span>
+        <div>
+          <pre><code class="language-javascript">$rootScope.$emit('nameEvent', 'Data');</code></pre>
+        </div><span>Послать событие для всех кто подписан на событие <i><b>nameEvent</b></i></span>
+        <div>
+          <pre><code class="language-javascript">$rootScope.$broadcast('nameEvent', 'Data');</code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Пример события</h2><br><br><br>
+        <div style="width: 90%"><p data-height="498" data-theme-id="0" data-slug-hash="qEXXQm" data-default-tab="result" data-user="QIvan" class='codepen'>See the Pen <a href='http://codepen.io/QIvan/pen/qEXXQm/'>Demo: events for presentation angular</a> by QIvan (<a href='http://codepen.io/QIvan'>@QIvan</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+        </div>
       </section>
       <section class="gif gif--end"></section>
       <section class="gif gif--magic">
         <h1>Подробнее о</h1>
+      </section>
+      <section>
+        <h3> Разберём подробнее первый пример </h3>
+        <pre class="language-javascript"><code>&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;http://code.angularjs.org/1.1.4/angular.min.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div ng-app ng-init=&quot;qty=1;cost=2&quot;&gt;
+      &lt;b&gt;Счёт:&lt;/b&gt;
+      &lt;div style=&quot;text-align: left;   display: block;  margin-right: auto;&quot;&gt;
+        Количество: &lt;input type=&quot;number&quot; min=&quot;0&quot; ng-model=&quot;qty&quot;&gt; &lt;br/&gt;
+        Стоимость: &lt;input type=&quot;number&quot; min=&quot;0&quot; ng-model=&quot;cost&quot;&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;b&gt;Итого:&lt;/b&gt; {{qty * cost}} руб.
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
       </section>
       <section>
         <h3>После загрузки скрипта angular.js и построения DOM</h3><br>
